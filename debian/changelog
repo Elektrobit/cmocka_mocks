@@ -1,6 +1,11 @@
-cmocka-mocks (0.53.0-1) UNRELEASED; urgency=medium
+cmocka-mocks (0.54.2-1) unstable; urgency=medium
 
-  * New upstream tag 0.52.1
+  * New upstream tag 0.54.2
+
+ -- Isaac True <isaac.true@emlix.com>  Tue, 23 Jul 2024 12:21:02 +0000
+
+cmocka-mocks (0.53.0-1) unstable; urgency=medium
+
   * New upstream tag 0.53.0
 
  -- Isaac True <isaac.true@emlix.com>  Fri, 19 Jul 2024 09:06:04 +0000

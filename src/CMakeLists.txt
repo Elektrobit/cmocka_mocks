@@ -15,9 +15,16 @@ configure_package_config_file(
     CMAKE_INSTALL_LIBDIR
 )
 
+write_basic_package_version_file(
+  ${CMAKE_CURRENT_BINARY_DIR}/cmocka_mocksConfigVersion.cmake
+  VERSION ${PKG_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
+
 install(
   FILES
     "${CMAKE_CURRENT_BINARY_DIR}/cmocka_mocksConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/cmocka_mocksConfigVersion.cmake"
   DESTINATION
     "${CMAKE_INSTALL_LIBDIR}/cmake/cmocka_mocks"
 )
