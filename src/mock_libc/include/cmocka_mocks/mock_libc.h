@@ -83,7 +83,7 @@ MOCK_FUNC_PROTOTYPE(connect, int, int fd, const struct sockaddr *addr, socklen_t
 MOCK_FUNC_PROTOTYPE(bind, int, int fd, __CONST_SOCKADDR_ARG addr, socklen_t len)
 MOCK_FUNC_PROTOTYPE(listen, int, int fd, int n)
 MOCK_FUNC_PROTOTYPE(close, int, int fd)
-MOCK_FUNC_PROTOTYPE(open, int, char *file, int flags, mode_t mode)
+MOCK_FUNC_PROTOTYPE(open, int, char *file, int flags, ...)
 extern int MOCK_FUNC_WRAP(pselect_errno);
 MOCK_FUNC_PROTOTYPE(pselect, int, int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
                     const struct timespec *timeout, const __sigset_t *sigmask)

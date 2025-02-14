@@ -4,6 +4,7 @@
 
 #include <cmocka.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -941,21 +942,36 @@ int MOCK_FUNC_WRAP(close)(int fd) {
 }
 
 MOCK_FUNC_VAR_NEW(open);
-int MOCK_FUNC_WRAP(open)(char *file, int flags, mode_t mode) {
+int MOCK_FUNC_WRAP(open)(char *file, int flags, ...) {
     int result;
+
+    mode_t mode = 0;
+    va_list args;
+
+    if (flags & O_CREAT) {
+        va_start(args, flags);
+        mode = va_arg(args, mode_t);
+        va_end(args);
+    }
 
     switch (MOCK_GET_TYPE(open)) {
         case CMOCKA_MOCK_ENABLED_WITH_FUNC:
             result = MOCK_FUNC_WITH(open)(file, flags, mode);
             break;
         case CMOCKA_MOCK_ENABLED:
-            check_expected(file);
+            check_expected_ptr(file);
             check_expected(flags);
-            check_expected(mode);
+            if (flags & O_CREAT) {
+                check_expected(mode);
+            }
             result = mock_type(int);
             break;
         default:
-            result = MOCK_FUNC_REAL(open)(file, flags, mode);
+            if (flags & O_CREAT) {
+                result = MOCK_FUNC_REAL(open)(file, flags, mode);
+            } else {
+                result = MOCK_FUNC_REAL(open)(file, flags);
+            }
             break;
     }
 
