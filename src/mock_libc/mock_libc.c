@@ -349,6 +349,7 @@ int MOCK_FUNC_WRAP(scandir)(const char *dirp, struct dirent ***namelist, int (*f
 }
 
 MOCK_FUNC_VAR_NEW(access);
+int MOCK_FUNC_WRAP(access_errno = 0);
 int MOCK_FUNC_WRAP(access)(const char *pathname, int mode) {
     int result;
 
@@ -359,6 +360,10 @@ int MOCK_FUNC_WRAP(access)(const char *pathname, int mode) {
         case CMOCKA_MOCK_ENABLED:
             check_expected_ptr(pathname);
             check_expected(mode);
+            if (MOCK_FUNC_WRAP(access_errno) != 0) {
+                errno = MOCK_FUNC_WRAP(access_errno);
+                MOCK_FUNC_WRAP(access_errno) = 0;
+            }
             result = mock_type(int);
             break;
         default:

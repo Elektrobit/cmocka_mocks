@@ -45,6 +45,7 @@ MOCK_FUNC_PROTOTYPE(free, void, void *ptr)
 MOCK_FUNC_PROTOTYPE(memcpy, void *, void *destination, const void *source, size_t num)
 MOCK_FUNC_PROTOTYPE(strdup, char *, const char *string)
 MOCK_FUNC_PROTOTYPE(strndup, char *, const char *string, size_t n)
+extern int MOCK_FUNC_WRAP(access_errno);
 MOCK_FUNC_PROTOTYPE(access, int, const char *pathname, int mode)
 MOCK_FUNC_PROTOTYPE(fopen, FILE *, const char *filename, const char *mode)
 MOCK_FUNC_PROTOTYPE(fdopen, FILE *, const int fd, const char *mode)
