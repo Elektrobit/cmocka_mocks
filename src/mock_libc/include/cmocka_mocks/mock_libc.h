@@ -34,6 +34,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+MOCK_FUNC_PROTOTYPE(unlink, int, const char *pathname)
 MOCK_FUNC_PROTOTYPE(regcomp, int, regex_t *preg, const char *regex, int cflags)
 MOCK_FUNC_PROTOTYPE(regerror, size_t, int errcode, const regex_t *preg, char *errbuf, size_t errbuf_size)
 MOCK_FUNC_PROTOTYPE(regexec, int, const regex_t *preg, const char *string, size_t nmatch, regmatch_t pmatch[],

@@ -8,6 +8,26 @@
 #include <string.h>
 #include <unistd.h>
 
+MOCK_FUNC_VAR_NEW(unlink);
+int MOCK_FUNC_WRAP(unlink)(const char *pathname) {
+    int result;
+
+    switch (MOCK_GET_TYPE(unlink)) {
+        case CMOCKA_MOCK_ENABLED_WITH_FUNC:
+            result = MOCK_FUNC_WITH(unlink)(pathname);
+            break;
+        case CMOCKA_MOCK_ENABLED:
+            check_expected_ptr(pathname);
+            result = mock_type(int);
+            break;
+        default:
+            result = MOCK_FUNC_REAL(unlink)(pathname);
+            break;
+    }
+
+    return result;
+}
+
 MOCK_FUNC_VAR_NEW(regcomp);
 int MOCK_FUNC_WRAP(regcomp)(regex_t *preg, const char *regex, int cflags) {
     int result;
