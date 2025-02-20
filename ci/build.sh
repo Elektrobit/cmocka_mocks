@@ -12,14 +12,19 @@ OPTION_CLEAN=0
 OPTION_VERBOSE=0
 while [ $# -gt 0 ]; do
     case ${1} in
-        --ci)          OPTION_CI=1 ;;
-        --clean|-c)    OPTION_CLEAN=1 ;;
-        --verbose|-v)  OPTION_VERBOSE=1 ;;
-        -D)            CMAKE_PARAM="${CMAKE_PARAM} -D ${2}"
-                       shift ;;
-        -D*)           CMAKE_PARAM="${CMAKE_PARAM} ${1}" ;;
-        -*)          echo "error: unknown option: ${1}"; exit 1 ;;
-        *)           PARAM="${PARAM} ${1}" ;;
+    --ci) OPTION_CI=1 ;;
+    --clean | -c) OPTION_CLEAN=1 ;;
+    --verbose | -v) OPTION_VERBOSE=1 ;;
+    -D)
+        CMAKE_PARAM="${CMAKE_PARAM} -D ${2}"
+        shift
+        ;;
+    -D*) CMAKE_PARAM="${CMAKE_PARAM} ${1}" ;;
+    -*)
+        echo "error: unknown option: ${1}"
+        exit 1
+        ;;
+    *) PARAM="${PARAM} ${1}" ;;
     esac
     shift
 done
@@ -63,7 +68,6 @@ mkdir -p "$RESULT_DIR" "$DIST_DIR"
 if [ ! -e "$CMAKE_BUILD_DIR/build.ninja" ]; then
     cmake -B "$CMAKE_BUILD_DIR" "$BASE_DIR" "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" -G Ninja $CMAKE_PARAM
 fi
-
 
 ninja -C "$CMAKE_BUILD_DIR" $NINJA_PARAM all install 2>&1 | tee "$RESULT_DIR/build_log.txt"
 
