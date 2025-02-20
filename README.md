@@ -6,27 +6,27 @@ for testing purposes. This collection of ready to use mocks is based on
 
 ## Building
 
+Make sure to install all dependencies
+
+* cmocka
+* cmocka_extensions
+* libmnl
+* jsonc
+* openssl
+
 cmocka_mocks uses CMake for building:
 
 ```bash
-export BUILD_TYPE=<Debug|Release>
-cmake -B ./build/${BUILD_TYPE}/cmake \
-        -D INSTALL_DIR=build/${BUILD_TYPE}/dist \
-        -D CMAKE_BUILD_TYPE=${BUILD_TYPE} \
-        -D CMOCKA_EXTENSIONS_URI=https://github.com/Elektrobit/cmocka_extensions.git \
-	-D CMOCKA_EXTENSIONS_REF=integration
-make -C ./build/${BUILD_TYPE}/cmake all
-make -C ./build/${BUILD_TYPE}/cmake install
+cmake -B ./build/
+make -C ./build/ all
+make -C ./build/ install
 ```
 
-It is also possible to configure cmake without the -D flags, if cmocka_extensions
-are already installed on the system.
-
-or use the CI hooks
+or use the CI hooks for developer setup
 
 ```bash
-source CONFIG.ini
-./ci/build.sh [Release]
+./ci/install_deps.py
+./ci/build.sh [Release|Debug]
 ```
 
 ### Workspace setup
