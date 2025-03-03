@@ -26,6 +26,7 @@ target_include_directories(
 target_link_options(
  mock_libc
  PUBLIC
+    -Wl,--wrap=unlink
     -Wl,--wrap=malloc
     -Wl,--wrap=realloc
     -Wl,--wrap=calloc
