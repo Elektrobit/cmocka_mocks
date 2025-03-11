@@ -8,6 +8,69 @@
 #include <string.h>
 #include <unistd.h>
 
+MOCK_FUNC_VAR_NEW(dirname);
+char *MOCK_FUNC_WRAP(dirname)(char *path) {
+    char *result;
+
+    switch (MOCK_GET_TYPE(dirname)) {
+        case CMOCKA_MOCK_ENABLED_WITH_FUNC:
+            result = MOCK_FUNC_WITH(dirname)(path);
+            break;
+        case CMOCKA_MOCK_ENABLED:
+            check_expected_ptr(path);
+            result = mock_type(char *);
+            break;
+        default:
+            result = MOCK_FUNC_REAL(dirname)(path);
+            break;
+    }
+
+    return result;
+}
+
+MOCK_FUNC_VAR_NEW(mkdir);
+int MOCK_FUNC_WRAP(mkdir)(const char *pathname, mode_t mode) {
+    int result;
+
+    switch (MOCK_GET_TYPE(mkdir)) {
+        case CMOCKA_MOCK_ENABLED_WITH_FUNC:
+            result = MOCK_FUNC_WITH(mkdir)(pathname, mode);
+            break;
+        case CMOCKA_MOCK_ENABLED:
+            check_expected_ptr(pathname);
+            check_expected(mode);
+            result = mock_type(int);
+            break;
+        default:
+            result = MOCK_FUNC_REAL(mkdir)(pathname, mode);
+            break;
+    }
+
+    return result;
+}
+
+MOCK_FUNC_VAR_NEW(readlink);
+ssize_t MOCK_FUNC_WRAP(readlink)(const char *pathname, char *buf, size_t bufsiz) {
+    ssize_t result;
+
+    switch (MOCK_GET_TYPE(readlink)) {
+        case CMOCKA_MOCK_ENABLED_WITH_FUNC:
+            result = MOCK_FUNC_WITH(readlink)(pathname, buf, bufsiz);
+            break;
+        case CMOCKA_MOCK_ENABLED:
+            check_expected_ptr(pathname);
+            check_expected_ptr(buf);
+            check_expected(bufsiz);
+            result = mock_type(size_t);
+            break;
+        default:
+            result = MOCK_FUNC_REAL(readlink)(pathname, buf, bufsiz);
+            break;
+    }
+
+    return result;
+}
+
 MOCK_FUNC_VAR_NEW(unlink);
 int MOCK_FUNC_WRAP(unlink)(const char *pathname) {
     int result;
@@ -819,6 +882,32 @@ int MOCK_FUNC_WRAP(socket)(int domain, int type, int protocol) {
             break;
         default:
             result = MOCK_FUNC_REAL(socket)(domain, type, protocol);
+            break;
+    }
+
+    return result;
+}
+
+MOCK_FUNC_VAR_NEW(getsockopt);
+int MOCK_FUNC_WRAP(getsockopt)(int fd, int level, int optname, void *optval, socklen_t *optlen) {
+    int result;
+
+    switch (MOCK_GET_TYPE(getsockopt)) {
+        case CMOCKA_MOCK_ENABLED_WITH_FUNC:
+            result = MOCK_FUNC_WITH(getsockopt)(fd, level, optname, optval, optlen);
+            break;
+
+        case CMOCKA_MOCK_ENABLED:
+            check_expected(fd);
+            check_expected(level);
+            check_expected(optname);
+            check_expected_ptr(optval);
+            check_expected_ptr(optlen);
+            result = mock_type(int);
+            break;
+
+        default:
+            result = MOCK_FUNC_REAL(getsockopt)(fd, level, optname, optval, optlen);
             break;
     }
 
