@@ -432,6 +432,36 @@ int MOCK_FUNC_WRAP(scandir)(const char *dirp, struct dirent ***namelist, int (*f
     return result;
 }
 
+MOCK_FUNC_VAR_NEW(mmap);
+int MOCK_FUNC_WRAP(mmap_errno = 0);
+void *MOCK_FUNC_WRAP(mmap)(void *addr, size_t length, int prot, int flags, int fd, off_t offset) {
+    void *result;
+
+    switch (MOCK_GET_TYPE(mmap)) {
+        case CMOCKA_MOCK_ENABLED_WITH_FUNC:
+            result = MOCK_FUNC_WITH(mmap)(addr, length, prot, flags, fd, offset);
+            break;
+        case CMOCKA_MOCK_ENABLED:
+            check_expected_ptr(addr);
+            check_expected(length);
+            check_expected(prot);
+            check_expected(flags);
+            check_expected(fd);
+            check_expected(offset);
+            if (MOCK_FUNC_WRAP(mmap_errno) != 0) {
+                errno = MOCK_FUNC_WRAP(mmap_errno);
+                MOCK_FUNC_WRAP(mmap_errno) = 0;
+            }
+            result = mock_type(void *);
+            break;
+        default:
+            result = MOCK_FUNC_REAL(mmap)(addr, length, prot, flags, fd, offset);
+            break;
+    }
+
+    return result;
+}
+
 MOCK_FUNC_VAR_NEW(access);
 int MOCK_FUNC_WRAP(access_errno = 0);
 int MOCK_FUNC_WRAP(access)(const char *pathname, int mode) {

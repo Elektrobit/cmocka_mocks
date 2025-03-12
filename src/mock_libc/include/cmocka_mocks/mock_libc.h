@@ -33,6 +33,7 @@
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/mman.h>
 #include <unistd.h>
 
 MOCK_FUNC_PROTOTYPE(dirname, char *, char *path)
@@ -50,6 +51,9 @@ MOCK_FUNC_PROTOTYPE(free, void, void *ptr)
 MOCK_FUNC_PROTOTYPE(memcpy, void *, void *destination, const void *source, size_t num)
 MOCK_FUNC_PROTOTYPE(strdup, char *, const char *string)
 MOCK_FUNC_PROTOTYPE(strndup, char *, const char *string, size_t n)
+extern int MOCK_FUNC_WRAP(mmap_errno);
+MOCK_FUNC_PROTOTYPE(mmap, void*, void *addr, size_t length, int prot, int flags,
+                    int fd, off_t offset)
 extern int MOCK_FUNC_WRAP(access_errno);
 MOCK_FUNC_PROTOTYPE(access, int, const char *pathname, int mode)
 extern int MOCK_FUNC_WRAP(ftruncate_errno);
