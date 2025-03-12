@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-set(CMOCKA_MOCKS_VERSION 0.55.7)
+set(CMOCKA_MOCKS_VERSION 0.55.9)
 
 # Attention: Aside from the version, as many things as possible in this file
 #   should be put into functions, as this solves potential issues with commands

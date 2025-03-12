@@ -43,7 +43,9 @@ target_link_options(
     -Wl,--wrap=fread
     -Wl,--wrap=fseek
     -Wl,--wrap=scandir
+    -Wl,--wrap=mmap
     -Wl,--wrap=access
+    -Wl,--wrap=ftruncate
     -Wl,--wrap=fseek
     -Wl,--wrap=rewind
     -Wl,--wrap=ftell
