@@ -26,6 +26,9 @@ target_include_directories(
 target_link_options(
  mock_libc
  PUBLIC
+    -Wl,--wrap=dirname
+    -Wl,--wrap=mkdir
+    -Wl,--wrap=readlink
     -Wl,--wrap=unlink
     -Wl,--wrap=malloc
     -Wl,--wrap=realloc
@@ -62,6 +65,7 @@ target_link_options(
     -Wl,--wrap=getaddrinfo
     -Wl,--wrap=freeaddrinfo
     -Wl,--wrap=socket
+    -Wl,--wrap=getsockopt
     -Wl,--wrap=setsockopt
     -Wl,--wrap=accept
     -Wl,--wrap=connect
