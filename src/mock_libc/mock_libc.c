@@ -458,6 +458,32 @@ int MOCK_FUNC_WRAP(access)(const char *pathname, int mode) {
     return result;
 }
 
+MOCK_FUNC_VAR_NEW(ftruncate);
+int MOCK_FUNC_WRAP(ftruncate_errno = 0);
+int MOCK_FUNC_WRAP(ftruncate)(int fd, off_t length) {
+    int result;
+
+    switch (MOCK_GET_TYPE(ftruncate)) {
+        case CMOCKA_MOCK_ENABLED_WITH_FUNC:
+            result = MOCK_FUNC_WITH(ftruncate)(fd, length);
+            break;
+        case CMOCKA_MOCK_ENABLED:
+            check_expected(fd);
+            check_expected(length);
+            if (MOCK_FUNC_WRAP(ftruncate_errno) != 0) {
+                errno = MOCK_FUNC_WRAP(ftruncate_errno);
+                MOCK_FUNC_WRAP(ftruncate_errno) = 0;
+            }
+            result = mock_type(int);
+            break;
+        default:
+            result = MOCK_FUNC_REAL(ftruncate)(fd, length);
+            break;
+    }
+
+    return result;
+}
+
 MOCK_FUNC_VAR_NEW(fseek);
 int MOCK_FUNC_WRAP(fseek)(FILE *stream, long int offset, int origin) {
     int result;
