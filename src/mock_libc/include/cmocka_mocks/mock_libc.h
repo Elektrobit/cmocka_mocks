@@ -77,6 +77,7 @@ MOCK_FUNC_PROTOTYPE(opendir, DIR *, const char *nam)
 MOCK_FUNC_PROTOTYPE(closedir, int, DIR *dirp)
 MOCK_FUNC_PROTOTYPE(remove, int, const char *filename)
 MOCK_FUNC_PROTOTYPE(readdir, struct dirent *, DIR *dirp)
+extern int MOCK_FUNC_WRAP(stat_errno);
 MOCK_FUNC_PROTOTYPE(stat, int, const char *pathname, struct stat *statbuf)
 MOCK_FUNC_PROTOTYPE(fputc, int, int character, FILE *stream)
 MOCK_FUNC_PROTOTYPE(time, time_t, time_t *timer)
