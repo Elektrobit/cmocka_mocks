@@ -754,6 +754,7 @@ struct dirent *MOCK_FUNC_WRAP(readdir)(DIR *dirp) {
 }
 
 MOCK_FUNC_VAR_NEW(stat);
+int MOCK_FUNC_WRAP(stat_errno = 0);
 int MOCK_FUNC_WRAP(stat)(const char *pathname, struct stat *statbuf) {
     int result;
 
@@ -764,6 +765,10 @@ int MOCK_FUNC_WRAP(stat)(const char *pathname, struct stat *statbuf) {
         case CMOCKA_MOCK_ENABLED:
             check_expected_ptr(pathname);
             check_expected_ptr(statbuf);
+            if (MOCK_FUNC_WRAP(stat_errno) != 0) {
+                errno = MOCK_FUNC_WRAP(stat_errno);
+                MOCK_FUNC_WRAP(stat_errno) = 0;
+            }
             result = mock_type(int);
             break;
         default:
